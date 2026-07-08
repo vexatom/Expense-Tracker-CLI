@@ -5,7 +5,7 @@ from models.category import Category
 
 class Expense:
 
-    def __init__(self, name: str, category: str, amount: int, date: datetime = None):
+    def __init__(self, expense_id: int, name: str, category: str, amount: int, date: datetime = None):
         if amount <= 0:
             raise ValueError("Amount must be greater than zero")
 
@@ -18,6 +18,7 @@ class Expense:
         if self.category is None:
             raise ValueError("Unknown category")
 
+        self.expense_id = expense_id
         self.name = name
         self.amount = amount
         self.date = date if date else datetime.now()
