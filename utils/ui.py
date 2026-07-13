@@ -40,7 +40,7 @@ class UI:
             raise ValueError('Page must be greater than zero')
 
         start = (page - 1) * h
-        expenses = sorted(expenses, key=lambda exp: exp.date)
+        expenses = sorted(expenses, key=lambda exp: exp.date, reverse=True)
         pages_exist = [False, False]
 
         if not expenses:
@@ -73,5 +73,5 @@ class UI:
     def display_expense(self, expense: Expense) -> None:
         print(f'''Name: {expense.name}
 Category: {expense.category.value}
-Amount: {expense.amount:.2f}
+Amount: ${expense.amount:.2f}
 Date: {expense.date.strftime("%d.%m.%Y %H:%M:%S")}''')

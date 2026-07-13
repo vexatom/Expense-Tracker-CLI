@@ -144,10 +144,11 @@ def main():
             show_expenses(expenses, total_expenses, expenses_for_the_last_month, ui=ui, tracker=tracker)
         elif act == 'filter':
             category = choice_category(ui=ui)
-            expenses = tracker.get_expenses_by_category(category)
-            total_expenses = tracker.get_total_expenses(category)
-            expenses_for_the_last_month = tracker.get_30_expenses(category)
-            show_expenses(expenses, total_expenses, expenses_for_the_last_month, ui=ui, tracker=tracker)
+            if isinstance(category, Category):
+                expenses = tracker.get_expenses_by_category(category)
+                total_expenses = tracker.get_total_expenses(category)
+                expenses_for_the_last_month = tracker.get_30_expenses(category)
+                show_expenses(expenses, total_expenses, expenses_for_the_last_month, ui=ui, tracker=tracker)
         elif act == 'add':
             add_expense(ui=ui, tracker=tracker)
         elif act == 'exit':

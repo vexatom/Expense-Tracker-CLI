@@ -25,7 +25,20 @@ class Expense:
             if isinstance(date, datetime):
                 self.date = date
             else:
-                self.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+                formats = [
+                    '%Y-%m-%d %H:%M:%S.%f',
+                    '%Y-%m-%d %H:%M:%S'
+                ]
+
+                for fmt in formats:
+                    try:
+                        self.date = datetime.strptime(date, fmt)
+                        break
+                    except ValueError:
+                        continue
+                else:
+                    raise ValueError("Unsupported date format")
+
         except (ValueError, TypeError) as _e:
             self.date = datetime.now()
 
