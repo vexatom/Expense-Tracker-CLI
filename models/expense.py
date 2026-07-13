@@ -30,7 +30,7 @@ class Expense:
             self.date = datetime.now()
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     def change_name(self, name: str):
         self.name = name
