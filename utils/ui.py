@@ -1,5 +1,6 @@
 import os
 
+from models.category import Category
 from models.expense import Expense
 
 
@@ -20,9 +21,15 @@ class UI:
     def line(self, sym: str = '=') -> None:
         print(sym * self.w)
 
-    def display_options(self, options: dict) -> None:
-        for k, v in options.items():
-            print(f'[{k}] {v}')
+    def pause(self, message: str) -> None:
+        input(f'{message}\n\n(Press Enter to continue)')
+
+    def display_categories(self, categories: Category) -> dict:
+        result = {}
+        for i, category in enumerate(categories, start=1):
+            print(f'[{i}] {category.value}')
+            result[i] = category
+        return result
 
     def display_expenses(self, expenses: list[Expense], total_expenses: int | float,
                          expenses_for_the_last_month: int | float,
@@ -37,7 +44,7 @@ class UI:
         pages_exist = [False, False]
 
         if not expenses:
-            print('You don\'t have any expenses yet.\nAdd one to get started')
+            print('You don\'t have any expenses yet.\nAdd one to get started\n')
             return pages_exist
 
         text += f'Total expenses: ${total_expenses:.2f}\nExpenses for the last month: ${expenses_for_the_last_month:.2f}\n\n'
@@ -47,8 +54,8 @@ class UI:
             if indx >= len(expenses):
                 break
             expense = expenses[indx]
-            text += (f'[{expense.expense_id}] {expense.date.strftime("%d.%m.%Y %H:%M:%S")} | '
-                     f'{expense.name} | {expense.category.value} | ${expense.amount}\n')
+            text += (f'[{expense.id}] {expense.date.strftime("%d.%m.%Y %H:%M:%S")} | '
+                     f'{expense.name} | {expense.category.value} | ${expense.amount:.2f}\n')
 
         if page > 1:
             text += '[pp] Previous page\n'
@@ -66,6 +73,5 @@ class UI:
     def display_expense(self, expense: Expense) -> None:
         print(f'''Name: {expense.name}
 Category: {expense.category.value}
-Amount: {expense.amount}
-Date: {expense.date.strftime("%d.%m.%Y %H:%M:%S")}
-''')
+Amount: {expense.amount:.2f}
+Date: {expense.date.strftime("%d.%m.%Y %H:%M:%S")}''')
