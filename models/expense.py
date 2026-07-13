@@ -18,10 +18,19 @@ class Expense:
         if self.category is None:
             raise ValueError("Unknown category")
 
-        self.expense_id = expense_id
+        self.id = expense_id
         self.name = name
         self.amount = amount
-        self.date = date if date else datetime.now()
+        try:
+            if isinstance(date, datetime):
+                self.date = date
+            else:
+                self.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+        except (ValueError, TypeError) as _e:
+            self.date = datetime.now()
+
+    def __str__(self):
+        return self.id
 
     def change_name(self, name: str):
         self.name = name
